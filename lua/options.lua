@@ -1,6 +1,9 @@
 require "nvchad.options"
 
--- add yours here!
+-- default with relative line numbers
+vim.wo.relativenumber = true
+
+-- pyright support
 require("lspconfig").pyright.setup {}
 
 -- enable 24-bit colour
