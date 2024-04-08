@@ -5,13 +5,13 @@
 local M = {}
 
 M.ui = {
-  theme = "decay",
+  theme = "doomchad",
   statusline = {
     theme = "vscode_colored",
   },
   tabufline = {
     lazyload = false,
-  }
+  },
 
   -- hl_override = {
   -- 	Comment = { italic = true },

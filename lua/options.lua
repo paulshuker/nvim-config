@@ -1,13 +1,16 @@
 require "nvchad.options"
 
--- default with relative line numbers
+-- default editor has relative line numbers
 vim.wo.relativenumber = true
-
--- pyright support
-require("lspconfig").pyright.setup {}
 
 -- enable 24-bit colour
 vim.opt.termguicolors = true
+
+-- enable text wrapping
+vim.opt.wrap = "on"
+
+-- pyright support
+require("lspconfig").pyright.setup {}
 
 require("nvim-tree").setup {
   view = {
@@ -47,8 +50,3 @@ local global_note = require "global-note"
 global_note.setup {
   filename = "global_note.md",
 }
--- show and wrap text at the 120 character length
-vim.cmd ":set colorcolumn=120"
-
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
