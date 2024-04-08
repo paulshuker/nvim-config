@@ -7,7 +7,7 @@ vim.wo.relativenumber = true
 vim.opt.termguicolors = true
 
 -- enable text wrapping
-vim.opt.wrap = "on"
+vim.opt.wrap = true
 
 -- pyright support
 require("lspconfig").pyright.setup {}
