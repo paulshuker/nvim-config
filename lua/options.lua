@@ -12,6 +12,9 @@ vim.opt.wrap = true
 -- always use utf-8 file encoding
 vim.cmd "set fileencoding=utf-8"
 
+-- British English spell checking
+vim.cmd "set spell spelllang=en_gb"
+
 -- pyright support
 require("lspconfig").pyright.setup {}
 
