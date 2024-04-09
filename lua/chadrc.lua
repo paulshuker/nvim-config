@@ -1,6 +1,27 @@
 -- This file  needs to have same structure as nvconfig.lua
 -- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvconfig.lua
 
+math.randomseed(os.time())
+
+local headers = {
+  {
+    " ███╗░░██╗██╗░░░██╗██╗███╗░░░███╗ ",
+    " ████╗░██║██║░░░██║██║████╗░████║ ",
+    " ██╔██╗██║╚██╗░██╔╝██║██╔████╔██║ ",
+    " ██║╚████║░╚████╔╝░██║██║╚██╔╝██║ ",
+    " ██║░╚███║░░╚██╔╝░░██║██║░╚═╝░██║ ",
+    " ╚═╝░░╚══╝░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝ ",
+  },
+}
+
+local function count(array)
+  local length = 0
+  for _ in pairs(array) do
+    length = length + 1
+  end
+  return length
+end
+
 ---@type ChadrcConfig
 local M = {}
 
@@ -14,14 +35,7 @@ M.ui = {
   },
   nvdash = {
     load_on_startup = true,
-    header = {
-      " █████▄     ▄████▄ ",
-      " █    █     █    ▀ ",
-      " █████▀     ██     ",
-      " █            ██   ",
-      " █          ▄   ██ ",
-      " █          █████  ",
-    },
+    header = headers[math.random(count(headers))],
   },
   term = {
     sizes = { sp = 0.3, vsp = 0.33 },
