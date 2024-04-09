@@ -23,6 +23,9 @@ M.ui = {
       " █          █████  ",
     },
   },
+  term = {
+    sizes = { sp = 0.3, vsp = 0.33 },
+  },
 }
 
 return M

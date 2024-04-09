@@ -9,13 +9,16 @@ vim.opt.termguicolors = true
 -- enable text wrapping
 vim.opt.wrap = true
 
+-- always use utf-8 file encoding
+vim.cmd "set fileencoding=utf-8"
+
 -- pyright support
 require("lspconfig").pyright.setup {}
 
 require("nvim-tree").setup {
   view = {
     side = "right",
-    width = 75,
+    width = 50,
     preserve_window_proportions = true,
   },
   git = {
