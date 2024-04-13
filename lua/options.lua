@@ -16,7 +16,8 @@ vim.cmd "set fileencoding=utf-8"
 vim.cmd "set spell spelllang=en_gb"
 
 -- pyright support
-require("lspconfig").pyright.setup {}
+local lspconfig = require "lspconfig"
+lspconfig.pyright.setup {}
 
 require("nvim-tree").setup {
   view = {
@@ -44,7 +45,7 @@ open_nvim_tree()
 require("conform").setup {
   formatters_by_ft = {
     python = { "black" },
-    csharp = { "dotnet csharpier" },
+    cs = { "csharpier" },
   },
   format_on_save = {
     timeout_ms = 1000,
