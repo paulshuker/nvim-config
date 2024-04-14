@@ -13,5 +13,9 @@ return {
   },
   {
     "backdround/global-note.nvim",
-  }
+  },
+  {
+    "rmagatti/auto-session",
+    lazy = false,
+  },
 }
