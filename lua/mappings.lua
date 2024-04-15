@@ -5,7 +5,7 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
 -- escape insert mode without far away escape key by pressing j+j in quick succession
-vim.cmd("inoremap jj <ESC>")
+vim.cmd "inoremap jj <ESC>"
 
 local terminal = require "nvchad.term"
 -- toggle one horizontal terminal window by alt + h in normal or terminal mode
