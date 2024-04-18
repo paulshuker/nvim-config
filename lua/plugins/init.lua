@@ -18,4 +18,8 @@ return {
     "rmagatti/auto-session",
     lazy = false,
   },
+  {
+    "folke/todo-comments.nvim",
+    lazy = false,
+  },
 }

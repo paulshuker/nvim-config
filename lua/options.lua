@@ -59,3 +59,11 @@ global_note.setup {
 }
 
 require("auto-session").setup {}
+
+require("todo-comments").setup {
+  highlight = {
+    multiline = false,
+    keyword = "",
+    after = "",
+  },
+}
