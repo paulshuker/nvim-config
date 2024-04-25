@@ -30,7 +30,7 @@ require("nvim-tree").setup {
     enable = false,
   },
   update_focused_file = {
-    enable = true,
+    enable = false,
   },
   -- Will change cwd of nvim-tree to that of new buffer's when opening nvim-tree
   respect_buf_cwd = true,
