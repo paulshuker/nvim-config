@@ -41,7 +41,29 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts, { desc = "LSP Rename" })
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "LSP Rename" })
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
   end,
 })
+
+-- Python Organise imports command with isort package using CLI
+local function organise_import_python()
+  local file = vim.fn.expand "%"
+  if file == nil then
+    return
+  else
+    file = tostring(file)
+  end
+  if not (string.sub(file, -3, -1) == ".py") then
+    vim.cmd "echo 'File must end with .py'"
+    return
+  end
+  vim.cmd "stopinsert"
+  vim.cmd "bufdo w"
+  terminal.runner { id = "PyOrganiser", pos = "float", cmd = "isort ./" .. file .. "; exit " }
+  terminal.toggle { id = "PyOrganiser" }
+  vim.cmd "stopinsert"
+  vim.cmd "bufdo e"
+  vim.cmd("echo 'Organised " .. tostring(file) .. "'")
+end
+vim.api.nvim_create_user_command("OrganiseImportPython", organise_import_python, {})
