@@ -8,14 +8,16 @@ map("i", "jk", "<ESC>")
 vim.cmd "inoremap jj <ESC>"
 
 local terminal = require "nvchad.term"
+local terminal_size = 0.32
 -- toggle one horizontal terminal window by alt + h in normal or terminal mode
 map({ "n", "t" }, "<C-q>", function()
-  terminal.toggle { pos = "vsp", id = "toggleterm" }
+  terminal.toggle { pos = "vsp", id = "toggleterm", size = terminal_size }
 end)
 map({ "n", "t" }, "<C-e>", function()
   terminal.runner {
     id = "toggleterm",
     pos = "vsp",
+    size = terminal_size,
 
     cmd = function()
       local file = vim.fn.expand "%"
