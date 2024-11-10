@@ -69,7 +69,7 @@ end
 local M = {}
 
 M.ui = {
-  theme = "everforest_light",
+  theme = "everforest",
   statusline = {
     theme = "vscode_colored",
   },

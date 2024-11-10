@@ -4,6 +4,16 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
+-- When a file is written to, remove tailing whitespace.
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  callback = function(ev)
+    local save_cursor = vim.fn.getpos "."
+    vim.cmd [[%s/\s\+$//e]]
+    vim.fn.setpos(".", save_cursor)
+  end,
+})
+
 -- escape insert mode without far away escape key by pressing j+j in quick succession
 vim.cmd "inoremap jj <ESC>"
 
