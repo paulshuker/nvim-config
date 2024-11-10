@@ -4,10 +4,13 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
+-- Move the cursor to column 120.
+vim.api.nvim_set_keymap('n', '<Leader>l', '120|', { noremap = true, silent = true })
+
 -- When a file is written to, remove tailing whitespace.
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = { "*" },
-  callback = function(ev)
+  callback = function(_)
     local save_cursor = vim.fn.getpos "."
     vim.cmd [[%s/\s\+$//e]]
     vim.fn.setpos(".", save_cursor)
