@@ -1,47 +1,104 @@
-require "nvchad.options"
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
--- default editor has relative line numbers
+-- Default editor has relative line numbers.
 vim.wo.relativenumber = true
 
--- enable 24-bit colour
+-- Enable 24-bit colour.
 vim.opt.termguicolors = true
 
--- enable text wrapping
+-- Enable text wrapping
 vim.opt.wrap = true
 
--- always use utf-8 file encoding
-vim.cmd "set fileencoding=utf-8"
+-- Prevent "unsaved work" error for unnamed buffers.
+vim.cmd("setlocal buftype=nofile")
 
--- British English spell checking
-vim.cmd "set spell spelllang=en_gb"
+-- Improved command-line completion.
+vim.o.wildmode = 'longest:full,full'
+vim.o.wildignorecase = true
 
--- pyright support
-local lspconfig = require "lspconfig"
-lspconfig.pyright.setup {}
+-- British English spell checking.
+vim.o.spell = true
+vim.o.spelllang = "en_gb"
 
+-- LSP Config and Mason setup.
+require("mason").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = { "lua_ls" },
+})
+-- Pyright support.
+require'lspconfig'.pyright.setup{}
+
+-- Markdown and LaTeX support.
+require'lspconfig'.ltex.setup{ language = "en-GB" }
+
+-- Colourscheme.
+require("kanagawa").load("wave")
+
+-- Status line.
+require('lualine').setup {
+    options = {
+        theme = 'auto',
+    },
+    extensions = {
+        "toggleterm", "nvim-tree"
+    },
+    sections = {
+        lualine_a = {'mode'},
+        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_c = {'filename'},
+        lualine_x = {'filetype'},
+        lualine_y = {},
+        lualine_z = {'%c'}
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {'filename'},
+        lualine_x = {},
+        lualine_y = {'progress'},
+        lualine_z = {}
+    },
+}
+
+-- File explorer with nvim-tree.
 require("nvim-tree").setup {
   view = {
     side = "right",
     width = 50,
-    preserve_window_proportions = true,
+    preserve_window_proportions = false,
   },
   git = {
-    -- no git integration in the file tree
+    -- Turn off git integration in the file tree.
     enable = false,
   },
   update_focused_file = {
     enable = false,
   },
-  -- Will change cwd of nvim-tree to that of new buffer's when opening nvim-tree
+  -- Will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
   respect_buf_cwd = true,
 }
--- open nvim-tree on startup
-local function open_nvim_tree()
-  require("nvim-tree.api").tree.open()
-end
-open_nvim_tree()
 
--- support for conform to auto-format python with black and format on save
+-- Bufferline options.
+require("bufferline").setup{
+    options = {
+        diagnostics = "nvim_lsp",
+        separator_style = "thick",
+        sort_by = "relative_directory",
+    },
+}
+
+-- Toggle terminal options.
+require("toggleterm").setup{
+    start_in_insert = false,
+}
+
+-- Tree sitter in some languages to improve.
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = { "python", "c_sharp", "lua", "vim", "vimdoc", "markdown", "markdown_inline" },
+}
+
+-- Support for conform to auto-format python with black and format on save.
 require("conform").setup {
   formatters_by_ft = {
     python = { "black" },
@@ -53,7 +110,7 @@ require("conform").setup {
   },
 }
 
--- very simple global note taking tools
+-- Very simple global note taking tools.
 local global_note = require "global-note"
 global_note.setup {
   filename = "global_note.md",

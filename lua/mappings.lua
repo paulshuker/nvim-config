@@ -1,84 +1,48 @@
-require "nvchad.mappings"
-
 local map = vim.keymap.set
+
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>")
+
+-- Escape insert mode without far away escape key by pressing j+j in quick succession.
+vim.cmd "inoremap jj <ESC>"
+
+-- Close the current buffer with Space + x.
+vim.api.nvim_set_keymap('n', '<leader>x', ':bd<CR>', { noremap = true, silent = true })
+
+-- Move between buffers by using Tab and Shift + Tab.
+vim.api.nvim_set_keymap('n', '<Tab>', ':bnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<S-Tab>', ':bprevious<CR>', { noremap = true, silent = true })
+
+-- Move splits by Ctrl + [hjkl].
+vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+
+-- Open the nvim-tree file explorer by pressing space + e.
+vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 -- Move the cursor to column 120.
 vim.api.nvim_set_keymap('n', '<Leader>l', '120|', { noremap = true, silent = true })
 
--- When a file is written to, remove tailing whitespace.
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  callback = function(_)
-    local save_cursor = vim.fn.getpos "."
-    vim.cmd [[%s/\s\+$//e]]
-    vim.fn.setpos(".", save_cursor)
-  end,
-})
+-- Telescope keymaps.
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 
--- escape insert mode without far away escape key by pressing j+j in quick succession
-vim.cmd "inoremap jj <ESC>"
+-- Terminal keymaps.
+-- Press Ctrl + X to exit terminal insert mode.
+vim.api.nvim_set_keymap('t', '<C-x>', [[<C-\><C-n>]], { noremap = true, silent = true })
+-- Press Space + v to open a vertical toggle terminal.
+vim.api.nvim_set_keymap(
+    "n", "<leader>v", ":ToggleTerm direction=vertical name=v<CR>", {noremap = false, silent = true}
+)
+-- Press Space + h to open a horizontal toggle terminal.
+vim.api.nvim_set_keymap(
+    "n", "<leader>h", ":ToggleTerm direction=horizontal name=h<CR>", {noremap = false, silent = true}
+)
 
-local terminal = require "nvchad.term"
-local terminal_size = 0.32
--- toggle one horizontal terminal window by alt + h in normal or terminal mode
-map({ "n", "t" }, "<C-q>", function()
-  terminal.toggle { pos = "vsp", id = "toggleterm", size = terminal_size }
-end)
-map({ "n", "t" }, "<C-e>", function()
-  terminal.runner {
-    id = "toggleterm",
-    pos = "vsp",
-    size = terminal_size,
-
-    cmd = function()
-      local file = vim.fn.expand "%"
-
-      local ft_cmds = {
-        python = "python3 " .. file,
-      }
-
-      return ft_cmds[vim.bo.ft]
-    end,
-  }
-end)
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "LSP Rename" })
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-  end,
-})
-
--- Python Organise imports command with isort package using CLI
-local function organise_import_python()
-  local file = vim.fn.expand "%"
-  if file == nil then
-    return
-  else
-    file = tostring(file)
-  end
-  if not (string.sub(file, -3, -1) == ".py") then
-    vim.cmd "echo 'File must end with .py'"
-    return
-  end
-  vim.cmd "stopinsert"
-  vim.cmd "bufdo w"
-  terminal.runner { id = "PyOrganiser", pos = "float", cmd = "isort ./" .. file .. "; exit " }
-  terminal.toggle { id = "PyOrganiser" }
-  vim.cmd "stopinsert"
-  vim.cmd "bufdo e"
-  vim.cmd("echo 'Organised " .. tostring(file) .. "'")
-end
-vim.api.nvim_create_user_command("OrganiseImportPython", organise_import_python, {})
+-- LSP keymaps.
+vim.keymap.set('n', 'gr', "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>rn', "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', 'gd', "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', 'gD', "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
