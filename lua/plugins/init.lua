@@ -22,6 +22,21 @@ return {
     lazy = false,
   },
   {
+    "hrsh7th/cmp-nvim-lsp"
+  },
+  {
+    "hrsh7th/cmp-buffer"
+  },
+  {
+    "hrsh7th/cmp-path"
+  },
+  {
+    "hrsh7th/cmp-cmdline"
+  },
+  {
+    "hrsh7th/nvim-cmp"
+  },
+  {
     "nvim-telescope/telescope.nvim",
     tag="0.1.8",
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -50,7 +65,13 @@ return {
   },
   {
     "folke/todo-comments.nvim",
-    lazy = false,
+    opts = {
+        highlight = {
+            multiline = false,
+            keyword = "",
+            after = "",
+        },
+    },
   },
   {
     "rebelot/kanagawa.nvim",
@@ -77,9 +98,5 @@ return {
   },
   {
     "backdround/global-note.nvim",
-  },
-  {
-    "rmagatti/auto-session",
-    lazy = false,
   },
 }

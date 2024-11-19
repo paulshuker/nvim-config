@@ -13,6 +13,12 @@ vim.opt.wrap = true
 -- Prevent "unsaved work" error for unnamed buffers.
 vim.cmd("setlocal buftype=nofile")
 
+-- Always show the sign column on the left. This stops distracting window jumping.
+vim.opt.signcolumn = 'yes'
+
+-- Stop the mouse from changing the mode to visual.
+vim.o.mouse = "a"
+
 -- Improved command-line completion.
 vim.o.wildmode = 'longest:full,full'
 vim.o.wildignorecase = true
@@ -20,17 +26,6 @@ vim.o.wildignorecase = true
 -- British English spell checking.
 vim.o.spell = true
 vim.o.spelllang = "en_gb"
-
--- LSP Config and Mason setup.
-require("mason").setup()
-require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls" },
-})
--- Pyright support.
-require'lspconfig'.pyright.setup{}
-
--- Markdown and LaTeX support.
-require'lspconfig'.ltex.setup{ language = "en-GB" }
 
 -- Colourscheme.
 require("kanagawa").load("wave")
@@ -98,30 +93,8 @@ require'nvim-treesitter.configs'.setup {
     ensure_installed = { "python", "c_sharp", "lua", "vim", "vimdoc", "markdown", "markdown_inline" },
 }
 
--- Support for conform to auto-format python with black and format on save.
-require("conform").setup {
-  formatters_by_ft = {
-    python = { "black" },
-    cs = { "csharpier" },
-  },
-  format_on_save = {
-    timeout_ms = 1000,
-    lsp_fallback = true,
-  },
-}
-
 -- Very simple global note taking tools.
 local global_note = require "global-note"
 global_note.setup {
   filename = "global_note.md",
-}
-
-require("auto-session").setup {}
-
-require("todo-comments").setup {
-  highlight = {
-    multiline = false,
-    keyword = "",
-    after = "",
-  },
 }
