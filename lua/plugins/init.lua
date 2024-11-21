@@ -60,7 +60,12 @@ return {
   },
   {
     "numToStr/Comment.nvim",
-    opts = {},
+    opts = {
+        toggler = {
+            line = "<leader>/",
+        },
+        mappings = { basic = false, extra = false, },
+    },
     lazy = false,
   },
   {

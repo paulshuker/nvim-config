@@ -24,10 +24,14 @@ vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = tru
 -- Move the cursor to column 120.
 vim.api.nvim_set_keymap('n', '<Leader>l', '120|', { noremap = true, silent = true })
 
+-- Toggle comment(s) in normal and visual mode using Space + /.
+vim.api.nvim_set_keymap('n', '<leader>/', '<cmd>lua require("Comment.api").toggle.linewise.current()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>/', '<esc><cmd>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>', { noremap = true, silent = true })
+
 -- Telescope keymaps.
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fw', builtin.live_grep, { desc = 'Telescope live grep' })
 
 -- Terminal keymaps.
 -- Press Ctrl + X to exit terminal insert mode.
