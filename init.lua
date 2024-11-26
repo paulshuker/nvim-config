@@ -2,30 +2,37 @@
 vim.g.mapleader = " "
 
 -- Bootstrap lazy and all plugins.
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.uv.fs_stat(lazypath) then
   local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    repo,
+    "--branch=stable",
+    lazypath,
+  })
 end
 
 vim.opt.rtp:prepend(lazypath)
 
 -- Load plugins.
-require("lazy").setup { { import = "plugins" } }
+require("lazy").setup({ { import = "plugins" } })
 
 vim.schedule(function()
-  require "options"
+  require("options")
 end)
 
 vim.schedule(function()
-  require "lsp_options"
+  require("lsp_options")
 end)
 
 vim.schedule(function()
-  require "mappings"
+  require("mappings")
 end)
 
 vim.schedule(function()
-  require "auto_mappings"
+  require("auto_mappings")
 end)

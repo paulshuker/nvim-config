@@ -12,13 +12,13 @@ vim.opt.termguicolors = true
 vim.opt.wrap = true
 
 -- Pattern search is case insensitive when the entire search is lower-case.
-vim.cmd "set ignorecase smartcase"
+vim.cmd("set ignorecase smartcase")
 
 -- Wrap cursor when pressing left, right, h or l.
-vim.cmd "set whichwrap+=<,>,h,l"
+vim.cmd("set whichwrap+=<,>,h,l")
 
 -- Prevent "unsaved work" error for unnamed buffers.
-vim.cmd "setlocal buftype=nofile"
+vim.cmd("setlocal buftype=nofile")
 
 -- Always show the sign column on the left. This stops distracting window jumping.
 vim.opt.signcolumn = "yes"
@@ -35,13 +35,13 @@ vim.o.spell = true
 vim.o.spelllang = "en_gb"
 
 -- Colourscheme.
-require("kanagawa").load "wave"
+require("kanagawa").load("wave")
 
 -- Smooth scrolling options.
-require("neoscroll").setup { hide_cursor = true, easing = "quadratic" }
+require("neoscroll").setup({ hide_cursor = true, easing = "quadratic" })
 
 -- Status line.
-require("lualine").setup {
+require("lualine").setup({
   options = {
     theme = "auto",
   },
@@ -54,7 +54,7 @@ require("lualine").setup {
     lualine_c = { "filename" },
     lualine_x = {
       function()
-        return os.date "%H:%M"
+        return os.date("%H:%M")
       end,
       "filetype",
     },
@@ -69,10 +69,10 @@ require("lualine").setup {
     lualine_y = { "progress" },
     lualine_z = {},
   },
-}
+})
 
 -- File explorer with nvim-tree.
-require("nvim-tree").setup {
+require("nvim-tree").setup({
   view = {
     side = "right",
     width = 50,
@@ -87,30 +87,41 @@ require("nvim-tree").setup {
   },
   -- Will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
   respect_buf_cwd = true,
-}
+})
 
 -- Bufferline options.
-require("bufferline").setup {
+require("bufferline").setup({
   options = {
     diagnostics = "nvim_lsp",
     separator_style = "slant",
   },
-}
+})
 
 -- Options for all terminals.
-require("toggleterm").setup {
+require("toggleterm").setup({
   open_mapping = {},
   shade_terminals = false,
   start_in_insert = false,
   persist_size = false,
-}
+})
 
 -- Tree sitter in some languages to improve.
-require("nvim-treesitter.configs").setup {
-  ensure_installed = { "python", "c_sharp", "lua", "vim", "vimdoc", "markdown", "markdown_inline" },
+require("nvim-treesitter.configs").setup({
+  ensure_installed = {
+    "python",
+    "c_sharp",
+    "lua",
+    "vim",
+    "vimdoc",
+    "markdown",
+    "markdown_inline",
+  },
   sync_install = false,
   auto_install = true,
   ignore_install = { "javascript" },
+  highlight = {
+    enable = true,
+  },
   textobjects = {
     select = {
       enable = true,
@@ -125,10 +136,10 @@ require("nvim-treesitter.configs").setup {
     },
   },
   modules = {},
-}
+})
 
 -- Very simple global note taking tools.
-local global_note = require "global-note"
-global_note.setup {
+local global_note = require("global-note")
+global_note.setup({
   filename = "global_note.md",
-}
+})
