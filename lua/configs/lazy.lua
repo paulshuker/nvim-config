@@ -1,6 +1,7 @@
 return {
   defaults = { lazy = true },
   install = {},
+  rocks = { enabled = false },
   ui = {
     icons = {
       ft = "",

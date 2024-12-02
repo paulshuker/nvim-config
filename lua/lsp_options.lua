@@ -64,7 +64,17 @@ require("mason-lspconfig").setup({
 })
 
 -- Pyright support.
-require("lspconfig").pyright.setup({})
+require("lspconfig").pyright.setup({
+  root_dir = function(fname)
+    if
+      fname:match(
+        "C:/Users/pauls/Documents/CortexLab/coppafish/coppafish/robominnie/test.integration_dir"
+      )
+    then
+      return nil
+    end
+  end,
+})
 
 -- Configure Lua LSP using lspconfig
 require("lspconfig").lua_ls.setup({
@@ -89,7 +99,11 @@ require("lspconfig").lua_ls.setup({
 -- Set up lspconfig.
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 -- Markdown and LaTeX support.
-require("lspconfig").ltex.setup({ capabilities = capabilities, language = "en-GB" })
+require("lspconfig").ltex.setup({
+  capabilities = capabilities,
+  language = "en",
+  settings = { language = "en" },
+})
 -- Add additional LSP servers for other languages if needed.
 local lsp_servers = { "pyright" }
 for _, lsp_server in ipairs(lsp_servers) do

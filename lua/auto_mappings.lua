@@ -1,9 +1,5 @@
--- When a file is written to, organise imports (in Python) and remove tailing
--- whitespace.
+-- When a file is written to, remove tailing whitespace.
 local function before_save()
-  if vim.bo.filetype == "python" then
-    vim.cmd("PyrightOrganizeImports")
-  end
   local save_cursor = vim.fn.getpos(".")
   vim.cmd([[%s/\s\+$//e]])
   vim.fn.setpos(".", save_cursor)
@@ -14,13 +10,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- Always use utf-8 file encoding.
-function choose_encoding()
-  local modifiable = vim.api.nvim_buf_get_option(0, "modifiable")
-  if modifiable then
+local function choose_encoding()
+  if vim.bo.modifiable then
     vim.cmd("set fileencoding=utf-8")
   end
 end
-
 vim.api.nvim_create_autocmd(
   { "BufRead", "BufNewFile" },
   { pattern = { "*" }, callback = choose_encoding }

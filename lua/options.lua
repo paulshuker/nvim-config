@@ -8,8 +8,8 @@ vim.wo.number = true
 -- Enable 24-bit colour.
 vim.opt.termguicolors = true
 
--- Enable text wrapping
-vim.opt.wrap = true
+-- Disable text wrapping
+vim.opt.wrap = false
 
 -- Pattern search is case insensitive when the entire search is lower-case.
 vim.cmd("set ignorecase smartcase")
@@ -26,6 +26,9 @@ vim.opt.signcolumn = "yes"
 -- Stop the mouse from changing the mode to visual.
 vim.o.mouse = "a"
 
+-- Turn off vanilla diagnostics in favour of tiny-inline-diagnostic for prettier messages.
+vim.diagnostic.config({ virtual_text = false })
+
 -- Improved command-line completion.
 vim.o.wildmode = "longest:full,full"
 vim.o.wildignorecase = true
@@ -35,10 +38,18 @@ vim.o.spell = true
 vim.o.spelllang = "en_gb"
 
 -- Colourscheme.
-require("kanagawa").load("wave")
+vim.o.background = "dark" -- or "light" for light mode
+vim.cmd([[colorscheme gruvbox]])
 
 -- Smooth scrolling options.
 require("neoscroll").setup({ hide_cursor = true, easing = "quadratic" })
+
+-- Reminders.
+require("remindme").setup({
+  message = { "Hydrate", "Posture Check" },
+  every = { 20, 40 },
+  close_after = { 19, 39 },
+})
 
 -- Status line.
 require("lualine").setup({
@@ -116,6 +127,8 @@ require("nvim-treesitter.configs").setup({
     "markdown",
     "markdown_inline",
   },
+  -- For Windows, require curl and tar.
+  prefer_git = false,
   sync_install = false,
   auto_install = true,
   ignore_install = { "javascript" },

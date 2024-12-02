@@ -1,21 +1,21 @@
 return {
   {
     dir = "~/Documents/Projects/remindme.nvim",
-    lazy = false,
+    lazy = true,
   },
   {
     "stevearc/conform.nvim",
-    config = function()
-      require("configs.conform")
-    end,
+    version = "v8.2.0",
   },
   {
     "nvim-tree/nvim-tree.lua",
     lazy = false,
+    version = "v1.8.0",
   },
   {
     "karb94/neoscroll.nvim",
     lazy = false,
+    tag = "0.2.0",
   },
   {
     "williamboman/mason.nvim",
@@ -46,6 +46,18 @@ return {
     version = "v0.3.1",
   },
   {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    commit = "83c09d5c84985e7f6d88c41b560c368c7c414dd4",
+    event = "VeryLazy", -- Or `LspAttach`
+    priority = 1000, -- needs to be loaded in first
+    config = function()
+      require("tiny-inline-diagnostic").setup({
+        preset = "modern",
+        options = { multiple_diag_under_cursor = true },
+      })
+    end,
+  },
+  {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.8",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -66,6 +78,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    commit = "69170c93149ddb71a22bd954514806395c430c02",
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
@@ -73,6 +86,7 @@ return {
   },
   {
     "numToStr/Comment.nvim",
+    tag = "v0.8.0",
     opts = {
       toggler = {
         line = "<leader>/",
@@ -83,6 +97,7 @@ return {
   },
   {
     "folke/todo-comments.nvim",
+    version = "v1.4.0",
     opts = {
       highlight = {
         multiline = false,
@@ -92,11 +107,14 @@ return {
     },
   },
   {
-    "rebelot/kanagawa.nvim",
-    lazy = false,
+    "ellisonleao/gruvbox.nvim",
+    version = "2.0.0",
+    priority = 1000,
+    config = true,
   },
   {
     "cameron-wags/rainbow_csv.nvim",
+    tag = "4.3.0",
     config = true,
     ft = {
       "csv",
@@ -116,5 +134,6 @@ return {
   },
   {
     "backdround/global-note.nvim",
+    commit = "1e0d4bba425d971ed3ce40d182c574a25507115c",
   },
 }
