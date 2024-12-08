@@ -9,6 +9,9 @@ vim.cmd("inoremap jj <ESC>")
 vim.cmd("nnoremap <leader>o o<Esc>")
 vim.cmd("nnoremap <leader>O O<Esc>")
 
+-- Change inner word by Ctrl + C.
+vim.api.nvim_set_keymap("n", "<C-c>", "ciw", {})
+
 -- Close the current buffer with Space + x.
 vim.api.nvim_set_keymap(
   "n",

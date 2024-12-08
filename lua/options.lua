@@ -37,12 +37,17 @@ vim.o.wildignorecase = true
 vim.o.spell = true
 vim.o.spelllang = "en_gb"
 
--- Colourscheme.
+-- Colour scheme.
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
 
 -- Smooth scrolling options.
 require("neoscroll").setup({ hide_cursor = true, easing = "quadratic" })
+
+-- Load previous session for the directory (if there is one).
+require("persistence").load()
+-- What will be saved from a session.
+vim.o.sessionoptions =
+  "blank,buffers,curdir,tabpages,winsize,winpos,terminal,localoptions"
 
 -- Reminders.
 require("remindme").setup({
@@ -51,25 +56,24 @@ require("remindme").setup({
   close_after = { 19, 39 },
 })
 
--- Status line.
+-- Bottom status line.
 require("lualine").setup({
   options = {
     theme = "auto",
+    component_separators = "",
+    section_separators = { left = "", right = "" },
   },
-  extensions = {
-    "nvim-tree",
-  },
+  extensions = {},
   sections = {
     lualine_a = { "mode" },
     lualine_b = { "branch", "diff", "diagnostics" },
-    lualine_c = { "filename" },
+    lualine_c = { "" },
     lualine_x = {
       function()
         return os.date("%H:%M")
       end,
-      "filetype",
     },
-    lualine_y = {},
+    lualine_y = { "" },
     lualine_z = { "%c" },
   },
   inactive_sections = {
@@ -86,7 +90,7 @@ require("lualine").setup({
 require("nvim-tree").setup({
   view = {
     side = "right",
-    width = 50,
+    width = 40,
     preserve_window_proportions = false,
   },
   git = {
@@ -99,6 +103,8 @@ require("nvim-tree").setup({
   -- Will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
   respect_buf_cwd = true,
 })
+-- Close nvim-tree when quitting nvim.
+vim.cmd("autocmd QuitPre * NvimTreeClose")
 
 -- Bufferline options.
 require("bufferline").setup({
